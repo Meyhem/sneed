@@ -1,9 +1,13 @@
+import _ from 'lodash'
 import yargs from 'yargs'
 
 import { Config, loadConfig } from './config'
+import { SneedError } from './errors'
 import { filesystem } from './file-system'
-import { initSneedEnvironment } from './init'
-;(async () => {
+import { initSneedEnvironment as initEnvironment } from './init'
+import { runCommand } from './templating'
+
+async function main() {
   process.on('unhandledRejection', err => {
     console.error(err)
     console.error('Sneed crashed...')
@@ -26,8 +30,11 @@ import { initSneedEnvironment } from './init'
     .alias('h', 'help')
     .example('$0', 'some_template --var1 4 --var2 7').argv
 
-  if (cli._[0] === 'init') {
+  const command = cli._[0]
+
+  if (command === 'init') {
     let cfg: Config | null = null
+
     try {
       cfg = await loadConfig()
       console.log('Configuration found')
@@ -35,6 +42,26 @@ import { initSneedEnvironment } from './init'
       console.log('No configuration found, will create')
     }
 
-    await initSneedEnvironment(cfg, filesystem)
+    await initEnvironment(cfg, filesystem)
+    process.exit(0)
   }
-})()
+
+  const config = await loadConfig()
+
+  if (_.includes(_.keys(config.commands), command)) {
+    const vars = _.mapValues(_.omit(cli, ['_', '$0', 'override']), _.toString)
+    await runCommand(command, vars, config)
+    process.exit(0)
+  }
+
+  throw new SneedError(`Command '${command}' is not builtin or defined in config`)
+}
+
+main().catch(err => {
+  if (err.isSneedError) {
+    console.error(err.message)
+    process.exit(1)
+  } else {
+    throw err
+  }
+})

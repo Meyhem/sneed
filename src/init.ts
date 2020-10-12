@@ -1,6 +1,17 @@
 import { Config } from './config'
 import { FilesystemApi } from './file-system'
 
+const defaultConfig = {
+  templateFolder: 'templates',
+  commands: {
+    test: {
+      scaffolds: [],
+      edits: [],
+      variables: {}
+    }
+  }
+}
+
 export async function initSneedEnvironment(cfg: Config | null, fs: FilesystemApi) {
   const templateFolder = cfg?.templateFolder || 'templates'
 
@@ -12,7 +23,7 @@ export async function initSneedEnvironment(cfg: Config | null, fs: FilesystemApi
   if (!cfg) {
     const p = '.sneedrc.json'
     await fs.createFile(p)
-    await fs.writeFile(p, JSON.stringify({ templateFolder: 'templates', commands: {} } as Config, null, 2))
+    await fs.writeFile(p, JSON.stringify(defaultConfig as Config, null, 2))
     console.log(`+ ${p}`)
   }
 }

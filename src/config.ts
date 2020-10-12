@@ -3,6 +3,7 @@ import _ from 'lodash'
 import { Schema, Validator } from 'jsonschema'
 
 import { Dictionary } from './types'
+import { SneedError } from './errors'
 
 export interface Command {
   scaffolds: Array<{ template: string; target: string }>
@@ -74,7 +75,7 @@ export async function loadConfig(): Promise<Config> {
   const result = await cosmiconfig('sneed').search()
 
   if (!result || result.isEmpty) {
-    throw new Error('No config found. Try adding .sneedrc, .sneedrc.json, .sneed.yaml, .sneedrc.js...')
+    throw new SneedError('No config found. Try adding .sneedrc, .sneedrc.json, .sneed.yaml, .sneedrc.js...')
   }
 
   const cfg = result?.config as Config
@@ -82,7 +83,7 @@ export async function loadConfig(): Promise<Config> {
   const validationResult = validator.validate(cfg, configSchema, { propertyName: 'sneed' })
 
   if (!validationResult.valid) {
-    throw new Error(`Invalid configuration: ${_.join(validationResult.errors)}`)
+    throw new SneedError(`Invalid configuration: ${_.join(validationResult.errors)}`)
   }
 
   return cfg
