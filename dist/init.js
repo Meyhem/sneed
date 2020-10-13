@@ -37,16 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initSneedEnvironment = void 0;
-var defaultConfig = {
-    templateFolder: 'templates',
-    commands: {
-        sampleCommand: {
-            scaffolds: [],
-            edits: [],
-            variables: {}
-        }
-    }
-};
+var defaultConfig = "\nmodule.exports = {\n  templateFolder: 'templates',\n  commands: {\n    ScaffoldHelloWorldFile: {\n      scaffolds: [\n        {\n          template: 'hello-world.ejs',\n          target: 'src/hello-world.js'\n        }\n      ],\n      edits: [],\n      variables: {\n        greet: {}\n      }\n    }\n  }\n}\n";
 function initSneedEnvironment(cfg, fs) {
     return __awaiter(this, void 0, void 0, function () {
         var templateFolder, p;
@@ -64,11 +55,11 @@ function initSneedEnvironment(cfg, fs) {
                     _a.label = 3;
                 case 3:
                     if (!!cfg) return [3 /*break*/, 6];
-                    p = '.sneedrc.json';
+                    p = '.sneedrc.js';
                     return [4 /*yield*/, fs.createFile(p)];
                 case 4:
                     _a.sent();
-                    return [4 /*yield*/, fs.writeFile(p, JSON.stringify(defaultConfig, null, 2))];
+                    return [4 /*yield*/, fs.writeFile(p, defaultConfig)];
                 case 5:
                     _a.sent();
                     console.log("+ " + p);

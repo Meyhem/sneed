@@ -1,16 +1,25 @@
 import { Config } from './config'
 import { FilesystemApi } from './file-system'
 
-const defaultConfig = {
+const defaultConfig = `
+module.exports = {
   templateFolder: 'templates',
   commands: {
-    sampleCommand: {
-      scaffolds: [],
+    ScaffoldHelloWorldFile: {
+      scaffolds: [
+        {
+          template: 'hello-world.ejs',
+          target: 'src/hello-world.js'
+        }
+      ],
       edits: [],
-      variables: {}
+      variables: {
+        greet: {}
+      }
     }
   }
 }
+`
 
 export async function initSneedEnvironment(cfg: Config | null, fs: FilesystemApi) {
   const templateFolder = cfg?.templateFolder || 'templates'
@@ -21,9 +30,9 @@ export async function initSneedEnvironment(cfg: Config | null, fs: FilesystemApi
   }
 
   if (!cfg) {
-    const p = '.sneedrc.json'
+    const p = '.sneedrc.js'
     await fs.createFile(p)
-    await fs.writeFile(p, JSON.stringify(defaultConfig as Config, null, 2))
+    await fs.writeFile(p, defaultConfig)
     console.log(`+ ${p}`)
   }
 }
