@@ -83,4 +83,7 @@ export async function runCommand(
     await fs.writeFile(renderedTargetPath, rendered)
     console.log(`+ ${renderedTargetPath}`)
   }
+
+  // for (const edit of cmd.edits) {
+  // }
 }

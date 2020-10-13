@@ -76,9 +76,10 @@ var configSchema = {
                             type: 'object',
                             additionalProperties: false,
                             properties: {
+                                template: { type: ['string'], required: true },
                                 target: { type: 'string', required: true },
                                 mark: { type: 'string', required: true },
-                                template: { type: ['string'], required: true }
+                                editType: { type: 'string', required: true, enum: ['insertBefore', 'insertAfter', 'replace'] }
                             }
                         }
                     },
