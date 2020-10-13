@@ -22,7 +22,7 @@ async function main() {
     })
     .demandCommand(1)
     .option('override', {
-      coerce: Boolean,
+      type: 'boolean',
       default: false,
       description: 'turns off existing file protection (can override existing files). !DATA LOSS DANGER!'
     })
@@ -50,7 +50,8 @@ async function main() {
 
   if (_.includes(_.keys(config.commands), command)) {
     const vars = _.mapValues(_.omit(cli, ['_', '$0', 'override']), _.toString)
-    await runCommand(command, vars, config)
+
+    await runCommand(command, vars, config, !!cli.override, filesystem)
     process.exit(0)
   }
 
