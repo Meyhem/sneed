@@ -101,19 +101,19 @@ function executeTemplateString(templateString, variables) {
 }
 function runCommand(command, variables, config, override, fs) {
     return __awaiter(this, void 0, void 0, function () {
-        var cmd, _a, _b, scaffold, templatePath, targetPath, renderedTemplatePath, renderedTargetPath, _c, template, rendered, dir, e_1_1;
-        var e_1, _d;
-        return __generator(this, function (_e) {
-            switch (_e.label) {
+        var cmd, _a, _b, scaffold, templatePath, targetPath, renderedTemplatePath, renderedTargetPath, _c, template, renderedTemplate, dir, e_1_1, _d, _e, edit, templatePath, renderedTemplatePath, renderedTargetPath, renderedMark, template, renderedTemplate, editedFile, replaceBy, editedResult, e_2_1;
+        var e_1, _f, e_2, _g;
+        return __generator(this, function (_h) {
+            switch (_h.label) {
                 case 0:
                     cmd = config.commands[command];
                     variables = prepareVariables(variables, cmd);
                     assertVariablesReady(variables);
-                    _e.label = 1;
+                    _h.label = 1;
                 case 1:
-                    _e.trys.push([1, 11, 12, 13]);
+                    _h.trys.push([1, 11, 12, 13]);
                     _a = __values(cmd.scaffolds), _b = _a.next();
-                    _e.label = 2;
+                    _h.label = 2;
                 case 2:
                     if (!!_b.done) return [3 /*break*/, 10];
                     scaffold = _b.value;
@@ -135,47 +135,139 @@ function runCommand(command, variables, config, override, fs) {
                     }
                     return [4 /*yield*/, fs.exists(renderedTemplatePath)];
                 case 3:
-                    if (!(_e.sent())) {
-                        throw new errors_1.SneedError("Template file '" + renderedTemplatePath + "' does not exist.");
+                    if (!(_h.sent())) {
+                        throw new errors_1.SneedError("'template' file '" + renderedTemplatePath + "' does not exist");
                     }
                     _c = !override;
                     if (!_c) return [3 /*break*/, 5];
                     return [4 /*yield*/, fs.exists(renderedTargetPath)];
                 case 4:
-                    _c = (_e.sent());
-                    _e.label = 5;
+                    _c = (_h.sent());
+                    _h.label = 5;
                 case 5:
                     if (_c) {
-                        throw new errors_1.SneedError("Target file '" + renderedTargetPath + "' already exists. Refusing to override to prevent data loss. Use option '--override' if this is intentional.");
+                        throw new errors_1.SneedError("Target file '" + renderedTargetPath + "' already exists. Refusing to override to prevent data loss. Use option '--override' if this is intentional");
                     }
                     return [4 /*yield*/, fs.readFile(renderedTemplatePath)];
                 case 6:
-                    template = _e.sent();
-                    rendered = executeTemplateString(template, variables);
+                    template = _h.sent();
+                    renderedTemplate = void 0;
+                    try {
+                        renderedTemplate = executeTemplateString(template, variables);
+                    }
+                    catch (e) {
+                        throw new errors_1.SneedError("Template file '" + renderedTemplatePath + "' contains EJS error: " + e.message);
+                    }
                     dir = path_1.default.parse(renderedTargetPath).dir;
                     return [4 /*yield*/, fs.createDir(dir)];
                 case 7:
-                    _e.sent();
-                    return [4 /*yield*/, fs.writeFile(renderedTargetPath, rendered)];
+                    _h.sent();
+                    return [4 /*yield*/, fs.writeFile(renderedTargetPath, renderedTemplate)];
                 case 8:
-                    _e.sent();
+                    _h.sent();
                     console.log("+ " + renderedTargetPath);
-                    _e.label = 9;
+                    _h.label = 9;
                 case 9:
                     _b = _a.next();
                     return [3 /*break*/, 2];
                 case 10: return [3 /*break*/, 13];
                 case 11:
-                    e_1_1 = _e.sent();
+                    e_1_1 = _h.sent();
                     e_1 = { error: e_1_1 };
                     return [3 /*break*/, 13];
                 case 12:
                     try {
-                        if (_b && !_b.done && (_d = _a.return)) _d.call(_a);
+                        if (_b && !_b.done && (_f = _a.return)) _f.call(_a);
                     }
                     finally { if (e_1) throw e_1.error; }
                     return [7 /*endfinally*/];
-                case 13: return [2 /*return*/];
+                case 13:
+                    _h.trys.push([13, 22, 23, 24]);
+                    _d = __values(cmd.edits), _e = _d.next();
+                    _h.label = 14;
+                case 14:
+                    if (!!_e.done) return [3 /*break*/, 21];
+                    edit = _e.value;
+                    templatePath = path_1.default.join(config.templateFolder, edit.template);
+                    renderedTemplatePath = void 0;
+                    renderedTargetPath = void 0;
+                    renderedMark = void 0;
+                    try {
+                        renderedTemplatePath = executeTemplateString(templatePath, variables);
+                    }
+                    catch (e) {
+                        throw new errors_1.SneedError("'template' path '" + templatePath + "' contains EJS error: " + e.message);
+                    }
+                    try {
+                        renderedTargetPath = executeTemplateString(edit.target, variables);
+                    }
+                    catch (e) {
+                        throw new errors_1.SneedError("'target' path '" + edit.target + "' contains EJS error: " + e.message);
+                    }
+                    try {
+                        renderedMark = executeTemplateString(edit.mark, variables);
+                    }
+                    catch (e) {
+                        throw new errors_1.SneedError("'mark' path '" + edit.mark + "' contains EJS error: " + e.message);
+                    }
+                    return [4 /*yield*/, fs.exists(renderedTemplatePath)];
+                case 15:
+                    if (!(_h.sent())) {
+                        throw new errors_1.SneedError("'template' file '" + renderedTemplatePath + "' does not exist");
+                    }
+                    return [4 /*yield*/, fs.exists(renderedTargetPath)];
+                case 16:
+                    if (!(_h.sent())) {
+                        throw new errors_1.SneedError("'target' file '" + renderedTargetPath + "' does not exist");
+                    }
+                    return [4 /*yield*/, fs.readFile(renderedTemplatePath)];
+                case 17:
+                    template = _h.sent();
+                    renderedTemplate = void 0;
+                    try {
+                        renderedTemplate = executeTemplateString(template, variables);
+                    }
+                    catch (e) {
+                        throw new errors_1.SneedError("Template '" + renderedTemplatePath + "' contains EJS error: " + e.message);
+                    }
+                    return [4 /*yield*/, fs.readFile(renderedTargetPath)];
+                case 18:
+                    editedFile = _h.sent();
+                    replaceBy = void 0;
+                    switch (edit.editType) {
+                        case 'insertAfter':
+                            replaceBy = renderedMark + renderedTemplate;
+                            break;
+                        case 'insertBefore':
+                            replaceBy = renderedTemplate + renderedMark;
+                            break;
+                        case 'replace':
+                            replaceBy = renderedTemplate;
+                            break;
+                        default:
+                            throw new Error('unreachable');
+                    }
+                    editedResult = editedFile.replace(renderedMark, replaceBy);
+                    return [4 /*yield*/, fs.writeFile(renderedTargetPath, editedResult)];
+                case 19:
+                    _h.sent();
+                    console.log("~ " + renderedTargetPath);
+                    _h.label = 20;
+                case 20:
+                    _e = _d.next();
+                    return [3 /*break*/, 14];
+                case 21: return [3 /*break*/, 24];
+                case 22:
+                    e_2_1 = _h.sent();
+                    e_2 = { error: e_2_1 };
+                    return [3 /*break*/, 24];
+                case 23:
+                    try {
+                        if (_e && !_e.done && (_g = _d.return)) _g.call(_d);
+                    }
+                    finally { if (e_2) throw e_2.error; }
+                    return [7 /*endfinally*/];
+                case 24: return [2 /*return*/];
             }
         });
     });

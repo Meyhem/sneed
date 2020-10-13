@@ -7,7 +7,7 @@ import { SneedError } from './errors'
 
 export interface Command {
   scaffolds: Array<{ template: string; target: string }>
-  edits: Array<{ file: string; mark: string; template: string }>
+  edits: Array<{ target: string; mark: string; template: string; editType: 'insertBefore' | 'insertAfter' | 'replace' }>
   variables: Dictionary<{ default?: string | number | null }>
 }
 
