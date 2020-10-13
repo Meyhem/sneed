@@ -39,7 +39,7 @@ async function main() {
       cfg = await loadConfig()
       console.log('Configuration found')
     } catch {
-      console.log('No configuration found, will create')
+      console.log('No configuration found, creating')
     }
 
     await initEnvironment(cfg, filesystem)

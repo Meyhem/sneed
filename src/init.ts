@@ -4,7 +4,7 @@ import { FilesystemApi } from './file-system'
 const defaultConfig = {
   templateFolder: 'templates',
   commands: {
-    test: {
+    sampleCommand: {
       scaffolds: [],
       edits: [],
       variables: {}

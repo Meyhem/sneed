@@ -40,7 +40,7 @@ exports.initSneedEnvironment = void 0;
 var defaultConfig = {
     templateFolder: 'templates',
     commands: {
-        test: {
+        sampleCommand: {
             scaffolds: [],
             edits: [],
             variables: {}

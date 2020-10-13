@@ -7,7 +7,7 @@ import { SneedError } from './errors'
 
 export interface Command {
   scaffolds: Array<{ template: string; target: string }>
-  edits: Array<{ file: string; mark: string; insertion: string }>
+  edits: Array<{ file: string; mark: string; template: string }>
   variables: Dictionary<{ default?: string | number | null }>
 }
 
@@ -50,7 +50,7 @@ const configSchema: Schema = {
               properties: {
                 target: { type: 'string', required: true },
                 mark: { type: 'string', required: true },
-                insertion: { type: ['string', 'number', 'boolean', 'null'], required: true }
+                template: { type: ['string'], required: true }
               }
             }
           },

@@ -101,7 +101,7 @@ function executeTemplateString(templateString, variables) {
 }
 function runCommand(command, variables, config, override, fs) {
     return __awaiter(this, void 0, void 0, function () {
-        var cmd, _a, _b, scaffold, templatePath, targetPath, _c, template, rendered, dir, e_1_1;
+        var cmd, _a, _b, scaffold, templatePath, targetPath, renderedTemplatePath, renderedTargetPath, _c, template, rendered, dir, e_1_1;
         var e_1, _d;
         return __generator(this, function (_e) {
             switch (_e.label) {
@@ -117,35 +117,49 @@ function runCommand(command, variables, config, override, fs) {
                 case 2:
                     if (!!_b.done) return [3 /*break*/, 10];
                     scaffold = _b.value;
-                    templatePath = executeTemplateString(path_1.default.join(config.templateFolder, scaffold.template), variables);
-                    targetPath = executeTemplateString(scaffold.target, variables);
-                    return [4 /*yield*/, fs.exists(templatePath)];
+                    templatePath = path_1.default.join(config.templateFolder, scaffold.template);
+                    targetPath = scaffold.target;
+                    renderedTemplatePath = void 0;
+                    renderedTargetPath = void 0;
+                    try {
+                        renderedTemplatePath = executeTemplateString(templatePath, variables);
+                    }
+                    catch (e) {
+                        throw new errors_1.SneedError("'template' path '" + templatePath + "' contains EJS error: " + e.message);
+                    }
+                    try {
+                        renderedTargetPath = executeTemplateString(targetPath, variables);
+                    }
+                    catch (e) {
+                        throw new errors_1.SneedError("'target' path '" + targetPath + "' contains EJS error: " + e.message);
+                    }
+                    return [4 /*yield*/, fs.exists(renderedTemplatePath)];
                 case 3:
                     if (!(_e.sent())) {
-                        throw new errors_1.SneedError("Template file '" + templatePath + "' does not exist.");
+                        throw new errors_1.SneedError("Template file '" + renderedTemplatePath + "' does not exist.");
                     }
                     _c = !override;
                     if (!_c) return [3 /*break*/, 5];
-                    return [4 /*yield*/, fs.exists(targetPath)];
+                    return [4 /*yield*/, fs.exists(renderedTargetPath)];
                 case 4:
                     _c = (_e.sent());
                     _e.label = 5;
                 case 5:
                     if (_c) {
-                        throw new errors_1.SneedError("Target file '" + targetPath + "' already exists. Refusing to override to prevent data loss. Use option '--override' if this is intentional.");
+                        throw new errors_1.SneedError("Target file '" + renderedTargetPath + "' already exists. Refusing to override to prevent data loss. Use option '--override' if this is intentional.");
                     }
-                    return [4 /*yield*/, fs.readFile(templatePath)];
+                    return [4 /*yield*/, fs.readFile(renderedTemplatePath)];
                 case 6:
                     template = _e.sent();
                     rendered = executeTemplateString(template, variables);
-                    dir = path_1.default.parse(targetPath).dir;
+                    dir = path_1.default.parse(renderedTargetPath).dir;
                     return [4 /*yield*/, fs.createDir(dir)];
                 case 7:
                     _e.sent();
-                    return [4 /*yield*/, fs.writeFile(targetPath, rendered)];
+                    return [4 /*yield*/, fs.writeFile(renderedTargetPath, rendered)];
                 case 8:
                     _e.sent();
-                    console.log("+ " + targetPath);
+                    console.log("+ " + renderedTargetPath);
                     _e.label = 9;
                 case 9:
                     _b = _a.next();

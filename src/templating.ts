@@ -47,26 +47,40 @@ export async function runCommand(
   assertVariablesReady(variables)
 
   for (const scaffold of cmd.scaffolds) {
-    const templatePath = executeTemplateString(path.join(config.templateFolder, scaffold.template), variables)
-    const targetPath = executeTemplateString(scaffold.target, variables)
+    const templatePath = path.join(config.templateFolder, scaffold.template)
+    const targetPath = scaffold.target
 
-    if (!(await fs.exists(templatePath))) {
-      throw new SneedError(`Template file '${templatePath}' does not exist.`)
+    let renderedTemplatePath
+    let renderedTargetPath
+    try {
+      renderedTemplatePath = executeTemplateString(templatePath, variables)
+    } catch (e) {
+      throw new SneedError(`'template' path '${templatePath}' contains EJS error: ${e.message}`)
     }
 
-    if (!override && (await fs.exists(targetPath))) {
+    try {
+      renderedTargetPath = executeTemplateString(targetPath, variables)
+    } catch (e) {
+      throw new SneedError(`'target' path '${targetPath}' contains EJS error: ${e.message}`)
+    }
+
+    if (!(await fs.exists(renderedTemplatePath))) {
+      throw new SneedError(`Template file '${renderedTemplatePath}' does not exist.`)
+    }
+
+    if (!override && (await fs.exists(renderedTargetPath))) {
       throw new SneedError(
-        `Target file '${targetPath}' already exists. Refusing to override to prevent data loss. Use option '--override' if this is intentional.`
+        `Target file '${renderedTargetPath}' already exists. Refusing to override to prevent data loss. Use option '--override' if this is intentional.`
       )
     }
 
-    const template = await fs.readFile(templatePath)
+    const template = await fs.readFile(renderedTemplatePath)
     const rendered = executeTemplateString(template, variables)
 
-    const dir = path.parse(targetPath).dir
+    const dir = path.parse(renderedTargetPath).dir
     await fs.createDir(dir)
 
-    await fs.writeFile(targetPath, rendered)
-    console.log(`+ ${targetPath}`)
+    await fs.writeFile(renderedTargetPath, rendered)
+    console.log(`+ ${renderedTargetPath}`)
   }
 }

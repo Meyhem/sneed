@@ -78,7 +78,7 @@ var configSchema = {
                             properties: {
                                 target: { type: 'string', required: true },
                                 mark: { type: 'string', required: true },
-                                insertion: { type: ['string', 'number', 'boolean', 'null'], required: true }
+                                template: { type: ['string'], required: true }
                             }
                         }
                     },

@@ -85,7 +85,7 @@ function main() {
                     return [3 /*break*/, 4];
                 case 3:
                     _a = _b.sent();
-                    console.log('No configuration found, will create');
+                    console.log('No configuration found, creating');
                     return [3 /*break*/, 4];
                 case 4: return [4 /*yield*/, init_1.initSneedEnvironment(cfg, file_system_1.filesystem)];
                 case 5:
