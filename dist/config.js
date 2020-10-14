@@ -104,7 +104,7 @@ function loadConfig() {
         var result, cfg, validator, validationResult;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, cosmiconfig_1.cosmiconfig('sneed').search()];
+                case 0: return [4 /*yield*/, cosmiconfig_1.cosmiconfig('sneed', { stopDir: process.cwd() }).search()];
                 case 1:
                     result = _a.sent();
                     if (!result || result.isEmpty) {

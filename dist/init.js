@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.initSneedEnvironment = void 0;
-var defaultConfig = "\nmodule.exports = {\n  templateFolder: 'templates',\n  commands: {\n    ScaffoldHelloWorldFile: {\n      scaffolds: [\n        {\n          template: 'hello-world.ejs',\n          target: 'src/hello-world.js'\n        }\n      ],\n      edits: [],\n      variables: {\n        greet: {}\n      }\n    }\n  }\n}\n";
+var defaultConfig = "\nmodule.exports = {\n  templateFolder: 'templates',\n  commands: {}\n}\n";
 function initSneedEnvironment(cfg, fs) {
     return __awaiter(this, void 0, void 0, function () {
         var templateFolder, p;

@@ -73,7 +73,7 @@ const configSchema: Schema = {
 }
 
 export async function loadConfig(): Promise<Config> {
-  const result = await cosmiconfig('sneed').search()
+  const result = await cosmiconfig('sneed', { stopDir: process.cwd() }).search()
 
   if (!result || result.isEmpty) {
     throw new SneedError('No config found. Try adding .sneedrc, .sneedrc.json, .sneed.yaml, .sneedrc.js...')

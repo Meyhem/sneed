@@ -2,6 +2,8 @@
 templates
 .sneedrc.js
 
+!examples/**
+
 # node
 node_modules
 .cache

@@ -4,20 +4,7 @@ import { FilesystemApi } from './file-system'
 const defaultConfig = `
 module.exports = {
   templateFolder: 'templates',
-  commands: {
-    ScaffoldHelloWorldFile: {
-      scaffolds: [
-        {
-          template: 'hello-world.ejs',
-          target: 'src/hello-world.js'
-        }
-      ],
-      edits: [],
-      variables: {
-        greet: {}
-      }
-    }
-  }
+  commands: {}
 }
 `
 
