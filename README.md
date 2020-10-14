@@ -9,6 +9,7 @@ Sneed is a simple scaffolding cli tool for developers, to generate source files 
 - [Path templating](#path-templating)
 - [Helpers - Case transformation](#helpers---case-transformation)
 - [Helpers - Paths](#helpers---paths)
+- [Examples](#examples)
 
 ## Getting started
 
@@ -295,3 +296,9 @@ will render
 ```
 index.html
 ```
+
+## Examples
+
+- [Hello world](https://github.com/Meyhem/sneed/tree/master/examples/1-hello-world)
+- [Variables](https://github.com/Meyhem/sneed/tree/master/examples/2-variables)
+- [React components](https://github.com/Meyhem/sneed/tree/master/examples/3-react-components)
