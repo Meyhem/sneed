@@ -87,7 +87,7 @@ var path_1 = __importDefault(require("path"));
 var casing = __importStar(require("change-case"));
 var errors_1 = require("./errors");
 function prepareVariables(variables, cmd) {
-    return __assign(__assign({}, lodash_1.default.defaultsDeep(variables, lodash_1.default.mapValues(cmd.variables, function (v) { return v.default; }))), { casing: casing });
+    return __assign(__assign({}, lodash_1.default.defaultsDeep(variables, lodash_1.default.mapValues(cmd.variables, function (v) { return v.default; }))), { casing: casing, path: path_1.default });
 }
 function assertVariablesReady(variables) {
     lodash_1.default.forEach(variables, function (v, k) {
@@ -111,11 +111,11 @@ function runCommand(command, variables, config, override, fs) {
                     assertVariablesReady(variables);
                     _h.label = 1;
                 case 1:
-                    _h.trys.push([1, 11, 12, 13]);
+                    _h.trys.push([1, 12, 13, 14]);
                     _a = __values(cmd.scaffolds), _b = _a.next();
                     _h.label = 2;
                 case 2:
-                    if (!!_b.done) return [3 /*break*/, 10];
+                    if (!!_b.done) return [3 /*break*/, 11];
                     scaffold = _b.value;
                     templatePath = path_1.default.join(config.templateFolder, scaffold.template);
                     targetPath = scaffold.target;
@@ -159,34 +159,36 @@ function runCommand(command, variables, config, override, fs) {
                         throw new errors_1.SneedError("Template file '" + renderedTemplatePath + "' contains EJS error: " + e.message);
                     }
                     dir = path_1.default.parse(renderedTargetPath).dir;
+                    if (!dir) return [3 /*break*/, 8];
                     return [4 /*yield*/, fs.createDir(dir)];
                 case 7:
                     _h.sent();
-                    return [4 /*yield*/, fs.writeFile(renderedTargetPath, renderedTemplate)];
-                case 8:
+                    _h.label = 8;
+                case 8: return [4 /*yield*/, fs.writeFile(renderedTargetPath, renderedTemplate)];
+                case 9:
                     _h.sent();
                     console.log("+ " + renderedTargetPath);
-                    _h.label = 9;
-                case 9:
+                    _h.label = 10;
+                case 10:
                     _b = _a.next();
                     return [3 /*break*/, 2];
-                case 10: return [3 /*break*/, 13];
-                case 11:
+                case 11: return [3 /*break*/, 14];
+                case 12:
                     e_1_1 = _h.sent();
                     e_1 = { error: e_1_1 };
-                    return [3 /*break*/, 13];
-                case 12:
+                    return [3 /*break*/, 14];
+                case 13:
                     try {
                         if (_b && !_b.done && (_f = _a.return)) _f.call(_a);
                     }
                     finally { if (e_1) throw e_1.error; }
                     return [7 /*endfinally*/];
-                case 13:
-                    _h.trys.push([13, 22, 23, 24]);
-                    _d = __values(cmd.edits), _e = _d.next();
-                    _h.label = 14;
                 case 14:
-                    if (!!_e.done) return [3 /*break*/, 21];
+                    _h.trys.push([14, 23, 24, 25]);
+                    _d = __values(cmd.edits), _e = _d.next();
+                    _h.label = 15;
+                case 15:
+                    if (!!_e.done) return [3 /*break*/, 22];
                     edit = _e.value;
                     templatePath = path_1.default.join(config.templateFolder, edit.template);
                     renderedTemplatePath = void 0;
@@ -211,17 +213,17 @@ function runCommand(command, variables, config, override, fs) {
                         throw new errors_1.SneedError("'mark' path '" + edit.mark + "' contains EJS error: " + e.message);
                     }
                     return [4 /*yield*/, fs.exists(renderedTemplatePath)];
-                case 15:
+                case 16:
                     if (!(_h.sent())) {
                         throw new errors_1.SneedError("'template' file '" + renderedTemplatePath + "' does not exist");
                     }
                     return [4 /*yield*/, fs.exists(renderedTargetPath)];
-                case 16:
+                case 17:
                     if (!(_h.sent())) {
                         throw new errors_1.SneedError("'target' file '" + renderedTargetPath + "' does not exist");
                     }
                     return [4 /*yield*/, fs.readFile(renderedTemplatePath)];
-                case 17:
+                case 18:
                     template = _h.sent();
                     renderedTemplate = void 0;
                     try {
@@ -231,7 +233,7 @@ function runCommand(command, variables, config, override, fs) {
                         throw new errors_1.SneedError("Template '" + renderedTemplatePath + "' contains EJS error: " + e.message);
                     }
                     return [4 /*yield*/, fs.readFile(renderedTargetPath)];
-                case 18:
+                case 19:
                     editedFile = _h.sent();
                     replaceBy = void 0;
                     switch (edit.editType) {
@@ -249,25 +251,25 @@ function runCommand(command, variables, config, override, fs) {
                     }
                     editedResult = editedFile.replace(renderedMark, replaceBy);
                     return [4 /*yield*/, fs.writeFile(renderedTargetPath, editedResult)];
-                case 19:
+                case 20:
                     _h.sent();
                     console.log("~ " + renderedTargetPath);
-                    _h.label = 20;
-                case 20:
+                    _h.label = 21;
+                case 21:
                     _e = _d.next();
-                    return [3 /*break*/, 14];
-                case 21: return [3 /*break*/, 24];
-                case 22:
+                    return [3 /*break*/, 15];
+                case 22: return [3 /*break*/, 25];
+                case 23:
                     e_2_1 = _h.sent();
                     e_2 = { error: e_2_1 };
-                    return [3 /*break*/, 24];
-                case 23:
+                    return [3 /*break*/, 25];
+                case 24:
                     try {
                         if (_e && !_e.done && (_g = _d.return)) _g.call(_d);
                     }
                     finally { if (e_2) throw e_2.error; }
                     return [7 /*endfinally*/];
-                case 24: return [2 /*return*/];
+                case 25: return [2 /*return*/];
             }
         });
     });

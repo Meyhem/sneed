@@ -16,7 +16,8 @@ function prepareVariables(variables: Variables, cmd: Command): Variables {
       variables,
       _.mapValues(cmd.variables, v => v.default)
     ),
-    casing: casing
+    casing: casing,
+    path: path
   }
 }
 
@@ -83,7 +84,9 @@ export async function runCommand(
     }
 
     const dir = path.parse(renderedTargetPath).dir
-    await fs.createDir(dir)
+    if (dir) {
+      await fs.createDir(dir)
+    }
 
     await fs.writeFile(renderedTargetPath, renderedTemplate)
     console.log(`+ ${renderedTargetPath}`)

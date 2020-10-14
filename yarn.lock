@@ -973,6 +973,13 @@
     "@parcel/utils" "^1.11.0"
     physical-cpu-count "^2.0.0"
 
+"@types/change-case@^2.3.1":
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/@types/change-case/-/change-case-2.3.1.tgz#dbaf4efb63ad8586ab8819179a790904ccb6a837"
+  integrity sha1-269O+2OthYariBkXmnkJBMy2qDc=
+  dependencies:
+    change-case "*"
+
 "@types/ejs@^3.0.4":
   version "3.0.4"
   resolved "https://registry.yarnpkg.com/@types/ejs/-/ejs-3.0.4.tgz#8851fcdedb96e410fbb24f83b8be6763ef9afa77"
@@ -1677,7 +1684,7 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-change-case@^4.1.1:
+change-case@*, change-case@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/change-case/-/change-case-4.1.1.tgz#d5005709275952e7963fed7b91e4f9fdb6180afa"
   integrity sha512-qRlUWn/hXnX1R1LBDF/RelJLiqNjKjUqlmuBVSEIyye8kq49CXqkZWKmi8XeUAdDXWFOcGLUMZ+aHn3Q5lzUXw==
