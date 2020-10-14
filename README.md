@@ -1,5 +1,8 @@
 # Sneed
 
+![NPM](https://img.shields.io/npm/l/sneed?style=plastic)
+![npm](https://img.shields.io/npm/v/sneed)
+
 Sneed is a simple scaffolding cli tool for developers, to generate source files based on templates they define and can keep in source control in their project.
 
 - [Getting started](#getting-started)
