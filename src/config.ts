@@ -14,6 +14,8 @@ export interface Command {
 export interface Config {
   templateFolder: string
   commands: Dictionary<Command>
+
+  override?: boolean
 }
 
 const configSchema: Schema = {

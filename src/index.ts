@@ -5,7 +5,7 @@ import { Config, loadConfig } from './config'
 import { SneedError } from './errors'
 import { filesystem } from './file-system'
 import { initSneedEnvironment as initEnvironment } from './init'
-import { runCommand } from './templating'
+import { executeCommand } from './templating'
 
 async function main() {
   process.on('unhandledRejection', err => {
@@ -50,8 +50,8 @@ async function main() {
 
   if (_.includes(_.keys(config.commands), command)) {
     const vars = _.mapValues(_.omit(cli, ['_', '$0', 'override']), _.toString)
-
-    await runCommand(command, vars, config, !!cli.override, filesystem)
+    config.override = !!cli.override
+    await executeCommand(command, vars, config, filesystem)
     process.exit(0)
   }
 

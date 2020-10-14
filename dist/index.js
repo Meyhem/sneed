@@ -97,7 +97,8 @@ function main() {
                     config = _b.sent();
                     if (!lodash_1.default.includes(lodash_1.default.keys(config.commands), command)) return [3 /*break*/, 9];
                     vars = lodash_1.default.mapValues(lodash_1.default.omit(cli, ['_', '$0', 'override']), lodash_1.default.toString);
-                    return [4 /*yield*/, templating_1.runCommand(command, vars, config, !!cli.override, file_system_1.filesystem)];
+                    config.override = !!cli.override;
+                    return [4 /*yield*/, templating_1.executeCommand(command, vars, config, file_system_1.filesystem)];
                 case 8:
                     _b.sent();
                     process.exit(0);

@@ -10,7 +10,7 @@ import { FilesystemApi } from './file-system'
 
 type Variables = Dictionary<string>
 
-function prepareVariables(variables: Variables, cmd: Command): Variables {
+export function prepareVariables(variables: Variables, cmd: Command): Variables {
   return {
     ..._.defaultsDeep(
       variables,
@@ -21,7 +21,7 @@ function prepareVariables(variables: Variables, cmd: Command): Variables {
   }
 }
 
-function assertVariablesReady(variables: Variables) {
+export function assertVariablesReady(variables: Variables) {
   _.forEach(variables, (v, k) => {
     if (_.isUndefined(v)) {
       throw new SneedError(
@@ -31,22 +31,11 @@ function assertVariablesReady(variables: Variables) {
   })
 }
 
-function executeTemplateString(templateString: string, variables: Variables): string {
+export function executeTemplateString(templateString: string, variables: Variables): string {
   return ejs.render(templateString, variables)
 }
 
-export async function runCommand(
-  command: string,
-  variables: Variables,
-  config: Config,
-  override: boolean,
-  fs: FilesystemApi
-) {
-  const cmd = config.commands[command]
-
-  variables = prepareVariables(variables, cmd)
-  assertVariablesReady(variables)
-
+export async function executeScaffolds(cmd: Command, variables: Variables, config: Config, fs: FilesystemApi) {
   for (const scaffold of cmd.scaffolds) {
     const templatePath = path.join(config.templateFolder, scaffold.template)
     const targetPath = scaffold.target
@@ -69,7 +58,7 @@ export async function runCommand(
       throw new SneedError(`'template' file '${renderedTemplatePath}' does not exist`)
     }
 
-    if (!override && (await fs.exists(renderedTargetPath))) {
+    if (!config.override && (await fs.exists(renderedTargetPath))) {
       throw new SneedError(
         `Target file '${renderedTargetPath}' already exists. Refusing to override to prevent data loss. Use option '--override' if this is intentional`
       )
@@ -91,7 +80,9 @@ export async function runCommand(
     await fs.writeFile(renderedTargetPath, renderedTemplate)
     console.log(`+ ${renderedTargetPath}`)
   }
+}
 
+export async function executeEdits(cmd: Command, variables: Variables, config: Config, fs: FilesystemApi) {
   for (const edit of cmd.edits) {
     const templatePath = path.join(config.templateFolder, edit.template)
     let renderedTemplatePath
@@ -153,4 +144,14 @@ export async function runCommand(
     await fs.writeFile(renderedTargetPath, editedResult)
     console.log(`~ ${renderedTargetPath}`)
   }
+}
+
+export async function executeCommand(command: string, variables: Variables, config: Config, fs: FilesystemApi) {
+  const cmd = config.commands[command]
+
+  variables = prepareVariables(variables, cmd)
+  assertVariablesReady(variables)
+
+  await executeScaffolds(cmd, variables, config, fs)
+  await executeEdits(cmd, variables, config, fs)
 }
