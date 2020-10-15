@@ -1,0 +1,10 @@
+const initialState = {}
+
+export const <%- casing.camelCase(feature + 'Reducer') %> = (state = initialState, action) => {
+  switch (action.type) {
+    case 'DUMMY_ACTION':
+      return { ...state }
+    default:
+      return state
+  }
+}

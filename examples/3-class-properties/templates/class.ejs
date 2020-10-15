@@ -1,0 +1,8 @@
+<% 
+  const props = _.split(properties, ',')
+-%>
+export class <%- casing.pascalCase(name) %> {
+<% for (const i in props) { -%>
+  <%- props[i] %>: string
+<% } -%>
+}

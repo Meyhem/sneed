@@ -87,7 +87,7 @@ var path_1 = __importDefault(require("path"));
 var casing = __importStar(require("change-case"));
 var errors_1 = require("./errors");
 function prepareVariables(variables, cmd) {
-    return __assign(__assign({}, lodash_1.default.defaultsDeep(variables, lodash_1.default.mapValues(cmd.variables, function (v) { return v.default; }))), { casing: casing, path: path_1.default });
+    return __assign(__assign({}, lodash_1.default.defaultsDeep(variables, lodash_1.default.mapValues(cmd.variables, function (v) { return v.default; }))), { casing: casing, path: path_1.default, _: lodash_1.default });
 }
 exports.prepareVariables = prepareVariables;
 function assertVariablesReady(variables) {

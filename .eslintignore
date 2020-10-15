@@ -3,3 +3,4 @@ bin
 .github
 .cache
 node_modules
+examples

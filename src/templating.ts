@@ -17,7 +17,8 @@ export function prepareVariables(variables: Variables, cmd: Command): Variables 
       _.mapValues(cmd.variables, v => v.default)
     ),
     casing: casing,
-    path: path
+    path: path,
+    _: _
   }
 }
 

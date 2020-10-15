@@ -13,6 +13,7 @@ Sneed is a simple scaffolding cli tool for developers, to generate source files 
 - [Path templating](#path-templating)
 - [Helpers - Case transformation](#helpers---case-transformation)
 - [Helpers - Paths](#helpers---paths)
+- [Helpers - Lodash](#helpers---lodash)
 - [Examples](#examples)
 
 ## Getting started
@@ -335,8 +336,13 @@ will render
 index.html
 ```
 
+## Helpers - Lodash
+
+**Sneed** provides utility swiss knife package [Lodash](https://lodash.com/docs) accessible under property **"\_"** which contains plethora of function for collection and object manipulation, transformation etc...
+
 ## Examples
 
 - [Hello world](https://github.com/Meyhem/sneed/tree/master/examples/1-hello-world)
 - [Variables](https://github.com/Meyhem/sneed/tree/master/examples/2-variables)
-- [React components](https://github.com/Meyhem/sneed/tree/master/examples/3-react-components)
+- [Class properties](https://github.com/Meyhem/sneed/tree/master/examples/3-class-properties)
+- [React components](https://github.com/Meyhem/sneed/tree/master/examples/5-react-components)

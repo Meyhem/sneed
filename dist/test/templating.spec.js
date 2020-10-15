@@ -10,6 +10,7 @@ describe('prepareVariables', function () {
         var out = templating_1.prepareVariables({}, { scaffolds: [], edits: [], variables: {} });
         expect(out.path).not.toBeUndefined();
         expect(out.casing).not.toBeUndefined();
+        expect(out._).not.toBeUndefined();
     });
 });
 describe('assertVariablesReady', function () {
