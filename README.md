@@ -9,6 +9,7 @@ Sneed is a simple scaffolding cli tool for developers, to generate source files 
 - [Configuring scaffolding](#configuring-scaffolding)
 - [Configuring editing](#configuring-editing)
 - [Variables](#variables)
+- [Templating engine](#templating-engine)
 - [Path templating](#path-templating)
 - [Helpers - Case transformation](#helpers---case-transformation)
 - [Helpers - Paths](#helpers---paths)
@@ -231,6 +232,32 @@ Greetings fellow citizen,
 
 you have new message John Wick!
 ```
+
+## Templating engine
+
+**Sneed** uses [EJS](https://github.com/mde/ejs) templating engine with all its features.
+
+It's recommended to use **<%- value %>** tags for rendering custom values, as it doesn't escape html chars which might be in your values and would likely result in invalid source code.
+
+_<%- %> render unescaped value (<>hello<>)_:
+
+```js
+<%- '<>hello<>' %>
+```
+
+_<%= %> render escaped value (&lt;&gt;hello&lt;&gt;)_:
+
+```js
+<%= '<>hello<>' %>
+```
+
+_<% %> are used for control flow statements_:
+
+```js
+<% if (value === 'hello') { %> Hello there <% } %>
+```
+
+Check [EJS docs](https://github.com/mde/ejs#tags) for more
 
 ## Path templating
 
