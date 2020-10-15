@@ -98,8 +98,11 @@ function assertVariablesReady(variables) {
     });
 }
 exports.assertVariablesReady = assertVariablesReady;
-function executeTemplateString(templateString, variables) {
-    return ejs_1.default.render(templateString, variables);
+function executeTemplateString(templateString, variables, templateFolder) {
+    return ejs_1.default.render(templateString, variables, {
+        filename: path_1.default.join(templateFolder, 'sneed-execution'),
+        root: templateFolder
+    });
 }
 exports.executeTemplateString = executeTemplateString;
 function executeScaffolds(cmd, variables, config, fs) {
@@ -120,13 +123,13 @@ function executeScaffolds(cmd, variables, config, fs) {
                     renderedTemplatePath = void 0;
                     renderedTargetPath = void 0;
                     try {
-                        renderedTemplatePath = executeTemplateString(templatePath, variables);
+                        renderedTemplatePath = executeTemplateString(templatePath, variables, config.templateFolder);
                     }
                     catch (e) {
                         throw new errors_1.SneedError("'template' path '" + templatePath + "' contains EJS error: " + e.message);
                     }
                     try {
-                        renderedTargetPath = executeTemplateString(targetPath, variables);
+                        renderedTargetPath = executeTemplateString(targetPath, variables, config.templateFolder);
                     }
                     catch (e) {
                         throw new errors_1.SneedError("'target' path '" + targetPath + "' contains EJS error: " + e.message);
@@ -151,7 +154,7 @@ function executeScaffolds(cmd, variables, config, fs) {
                     template = _e.sent();
                     renderedTemplate = void 0;
                     try {
-                        renderedTemplate = executeTemplateString(template, variables);
+                        renderedTemplate = executeTemplateString(template, variables, config.templateFolder);
                     }
                     catch (e) {
                         throw new errors_1.SneedError("Template file '" + renderedTemplatePath + "' contains EJS error: " + e.message);
@@ -205,19 +208,19 @@ function executeEdits(cmd, variables, config, fs) {
                     renderedTargetPath = void 0;
                     renderedMark = void 0;
                     try {
-                        renderedTemplatePath = executeTemplateString(templatePath, variables);
+                        renderedTemplatePath = executeTemplateString(templatePath, variables, config.templateFolder);
                     }
                     catch (e) {
                         throw new errors_1.SneedError("'template' path '" + templatePath + "' contains EJS error: " + e.message);
                     }
                     try {
-                        renderedTargetPath = executeTemplateString(edit.target, variables);
+                        renderedTargetPath = executeTemplateString(edit.target, variables, config.templateFolder);
                     }
                     catch (e) {
                         throw new errors_1.SneedError("'target' path '" + edit.target + "' contains EJS error: " + e.message);
                     }
                     try {
-                        renderedMark = executeTemplateString(edit.mark, variables);
+                        renderedMark = executeTemplateString(edit.mark, variables, config.templateFolder);
                     }
                     catch (e) {
                         throw new errors_1.SneedError("'mark' path '" + edit.mark + "' contains EJS error: " + e.message);
@@ -237,7 +240,7 @@ function executeEdits(cmd, variables, config, fs) {
                     template = _d.sent();
                     renderedTemplate = void 0;
                     try {
-                        renderedTemplate = executeTemplateString(template, variables);
+                        renderedTemplate = executeTemplateString(template, variables, config.templateFolder);
                     }
                     catch (e) {
                         throw new errors_1.SneedError("Template '" + renderedTemplatePath + "' contains EJS error: " + e.message);

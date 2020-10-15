@@ -40,6 +40,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var lodash_1 = __importDefault(require("lodash"));
+var path_1 = __importDefault(require("path"));
 var yargs_1 = __importDefault(require("yargs"));
 var config_1 = require("./config");
 var errors_1 = require("./errors");
@@ -98,6 +99,7 @@ function main() {
                     if (!lodash_1.default.includes(lodash_1.default.keys(config.commands), command)) return [3 /*break*/, 9];
                     vars = lodash_1.default.mapValues(lodash_1.default.omit(cli, ['_', '$0', 'override']), lodash_1.default.toString);
                     config.override = !!cli.override;
+                    config.templateFolder = path_1.default.resolve(config.templateFolder);
                     return [4 /*yield*/, templating_1.executeCommand(command, vars, config, file_system_1.filesystem)];
                 case 8:
                     _b.sent();

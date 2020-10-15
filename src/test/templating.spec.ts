@@ -25,17 +25,17 @@ describe('assertVariablesReady', () => {
 
 describe('executeTemplateString', () => {
   test('renders const string', () => {
-    const out = executeTemplateString('Feed & Seed', {})
+    const out = executeTemplateString('Feed & Seed', {}, '')
     expect(out).toEqual('Feed & Seed')
   })
 
   test('renders with variable', () => {
-    const out = executeTemplateString('<%- name %> Feed & Seed', { name: "Chuck's" })
+    const out = executeTemplateString('<%- name %> Feed & Seed', { name: "Chuck's" }, '')
     expect(out).toEqual("Chuck's Feed & Seed")
   })
 
   test('evaluates condition', () => {
-    const out = executeTemplateString('<% if (true) { %>Feed & Seed<% } %>', {})
+    const out = executeTemplateString('<% if (true) { %>Feed & Seed<% } %>', {}, '')
     expect(out).toEqual('Feed & Seed')
   })
 })

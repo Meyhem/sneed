@@ -1,4 +1,5 @@
 import _ from 'lodash'
+import path from 'path'
 import yargs from 'yargs'
 
 import { Config, loadConfig } from './config'
@@ -51,6 +52,7 @@ async function main() {
   if (_.includes(_.keys(config.commands), command)) {
     const vars = _.mapValues(_.omit(cli, ['_', '$0', 'override']), _.toString)
     config.override = !!cli.override
+    config.templateFolder = path.resolve(config.templateFolder)
     await executeCommand(command, vars, config, filesystem)
     process.exit(0)
   }

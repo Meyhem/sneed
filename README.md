@@ -257,7 +257,15 @@ _<% %> are used for control flow statements_:
 <% if (value === 'hello') { %> Hello there <% } %>
 ```
 
-Check [EJS docs](https://github.com/mde/ejs#tags) for more
+_<%- include(templateFile, variables) %> for including other templates_
+
+```js
+<%- include('ClassTemplate', { class: 'Chuck' }) %>
+```
+
+(including is relative to configs "templatesFolder")
+
+Check [EJS docs](https://github.com/mde/ejs#tags) for more!
 
 ## Path templating
 

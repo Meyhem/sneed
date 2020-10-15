@@ -22,15 +22,15 @@ describe('assertVariablesReady', function () {
 });
 describe('executeTemplateString', function () {
     test('renders const string', function () {
-        var out = templating_1.executeTemplateString('Feed & Seed', {});
+        var out = templating_1.executeTemplateString('Feed & Seed', {}, '');
         expect(out).toEqual('Feed & Seed');
     });
     test('renders with variable', function () {
-        var out = templating_1.executeTemplateString('<%- name %> Feed & Seed', { name: "Chuck's" });
+        var out = templating_1.executeTemplateString('<%- name %> Feed & Seed', { name: "Chuck's" }, '');
         expect(out).toEqual("Chuck's Feed & Seed");
     });
     test('evaluates condition', function () {
-        var out = templating_1.executeTemplateString('<% if (true) { %>Feed & Seed<% } %>', {});
+        var out = templating_1.executeTemplateString('<% if (true) { %>Feed & Seed<% } %>', {}, '');
         expect(out).toEqual('Feed & Seed');
     });
 });
