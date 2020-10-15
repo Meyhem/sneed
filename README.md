@@ -169,6 +169,8 @@ register.component(require('./building'))
 register.component(require('./brewing'))
 ```
 
+_Note that you need to place spaces & newlines into your template manually to correctly insert stuff_
+
 ## Variables
 
 **Sneed** provides a way how to pass custom data (e.g. component names, switches...) into rendering engine. This way you can customize how your template behaves.
