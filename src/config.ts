@@ -83,7 +83,7 @@ export async function loadConfig(): Promise<Config> {
 
   const cfg = result?.config as Config
   const validator = new Validator()
-  const validationResult = validator.validate(cfg, configSchema, { propertyName: 'sneed' })
+  const validationResult = validator.validate(cfg, configSchema)
 
   if (!validationResult.valid) {
     throw new SneedError(`Invalid configuration: ${_.join(validationResult.errors)}`)

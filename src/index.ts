@@ -11,7 +11,9 @@ import { executeCommand } from './templating'
 async function main() {
   process.on('unhandledRejection', err => {
     console.error(err)
-    console.error('Sneed crashed...')
+    console.error(
+      'Sneed crashed... If you this its a bug please submit an issue https://github.com/Meyhem/sneed/issues'
+    )
     process.exit(1)
   })
 
@@ -29,7 +31,7 @@ async function main() {
     })
     .help('h')
     .alias('h', 'help')
-    .example('$0', 'some_template --var1 4 --var2 7').argv
+    .example('$0', 'some_template --var1 4 --var2 7').argv as Record<string, string>
 
   const command = cli._[0]
 
