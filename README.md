@@ -350,3 +350,6 @@ index.html
 - [Edit root reducer](https://github.com/Meyhem/sneed/tree/master/examples/4-edit-root-reducer)
 - [React components](https://github.com/Meyhem/sneed/tree/master/examples/5-react-components)
 - [C# Service with Interface](https://github.com/Meyhem/sneed/tree/master/examples/6-c-sharp-service-with-interface)
+
+## Closing notes
+- Don't be Chuck
