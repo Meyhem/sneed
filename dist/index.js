@@ -55,7 +55,7 @@ function main() {
                 case 0:
                     process.on('unhandledRejection', function (err) {
                         console.error(err);
-                        console.error('Sneed crashed...');
+                        console.error('Sneed crashed... If you this its a bug please submit an issue https://github.com/Meyhem/sneed/issues');
                         process.exit(1);
                     });
                     cli = yargs_1.default
@@ -79,7 +79,7 @@ function main() {
                     _b.label = 1;
                 case 1:
                     _b.trys.push([1, 3, , 4]);
-                    return [4 /*yield*/, config_1.loadConfig()];
+                    return [4 /*yield*/, (0, config_1.loadConfig)()];
                 case 2:
                     cfg = _b.sent();
                     console.log('Configuration found');
@@ -88,19 +88,19 @@ function main() {
                     _a = _b.sent();
                     console.log('No configuration found, creating');
                     return [3 /*break*/, 4];
-                case 4: return [4 /*yield*/, init_1.initSneedEnvironment(cfg, file_system_1.filesystem)];
+                case 4: return [4 /*yield*/, (0, init_1.initSneedEnvironment)(cfg, file_system_1.filesystem)];
                 case 5:
                     _b.sent();
                     process.exit(0);
                     _b.label = 6;
-                case 6: return [4 /*yield*/, config_1.loadConfig()];
+                case 6: return [4 /*yield*/, (0, config_1.loadConfig)()];
                 case 7:
                     config = _b.sent();
                     if (!lodash_1.default.includes(lodash_1.default.keys(config.commands), command)) return [3 /*break*/, 9];
                     vars = lodash_1.default.mapValues(lodash_1.default.omit(cli, ['_', '$0', 'override']), lodash_1.default.toString);
                     config.override = !!cli.override;
                     config.templateFolder = path_1.default.resolve(config.templateFolder);
-                    return [4 /*yield*/, templating_1.executeCommand(command, vars, config, file_system_1.filesystem)];
+                    return [4 /*yield*/, (0, templating_1.executeCommand)(command, vars, config, file_system_1.filesystem)];
                 case 8:
                     _b.sent();
                     process.exit(0);

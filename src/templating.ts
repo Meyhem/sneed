@@ -48,13 +48,13 @@ export async function executeScaffolds(cmd: Command, variables: Variables, confi
     let renderedTargetPath
     try {
       renderedTemplatePath = executeTemplateString(templatePath, variables, config.templateFolder)
-    } catch (e) {
+    } catch (e: any) {
       throw new SneedError(`'template' path '${templatePath}' contains EJS error: ${e.message}`)
     }
 
     try {
       renderedTargetPath = executeTemplateString(targetPath, variables, config.templateFolder)
-    } catch (e) {
+    } catch (e: any) {
       throw new SneedError(`'target' path '${targetPath}' contains EJS error: ${e.message}`)
     }
 
@@ -72,7 +72,7 @@ export async function executeScaffolds(cmd: Command, variables: Variables, confi
     let renderedTemplate
     try {
       renderedTemplate = executeTemplateString(template, variables, config.templateFolder)
-    } catch (e) {
+    } catch (e: any) {
       throw new SneedError(`Template file '${renderedTemplatePath}' contains EJS error: ${e.message}`)
     }
 
@@ -95,19 +95,19 @@ export async function executeEdits(cmd: Command, variables: Variables, config: C
 
     try {
       renderedTemplatePath = executeTemplateString(templatePath, variables, config.templateFolder)
-    } catch (e) {
+    } catch (e: any) {
       throw new SneedError(`'template' path '${templatePath}' contains EJS error: ${e.message}`)
     }
 
     try {
       renderedTargetPath = executeTemplateString(edit.target, variables, config.templateFolder)
-    } catch (e) {
+    } catch (e: any) {
       throw new SneedError(`'target' path '${edit.target}' contains EJS error: ${e.message}`)
     }
 
     try {
       renderedMark = executeTemplateString(edit.mark, variables, config.templateFolder)
-    } catch (e) {
+    } catch (e: any) {
       throw new SneedError(`'mark' path '${edit.mark}' contains EJS error: ${e.message}`)
     }
 
@@ -123,7 +123,7 @@ export async function executeEdits(cmd: Command, variables: Variables, config: C
     let renderedTemplate
     try {
       renderedTemplate = executeTemplateString(template, variables, config.templateFolder)
-    } catch (e) {
+    } catch (e: any) {
       throw new SneedError(`Template '${renderedTemplatePath}' contains EJS error: ${e.message}`)
     }
     const editedFile = await fs.readFile(renderedTargetPath)

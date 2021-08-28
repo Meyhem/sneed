@@ -15,6 +15,7 @@ Sneed is a simple scaffolding cli tool for developers, to generate source files 
 - [Helpers - Paths](#helpers---paths)
 - [Helpers - Lodash](#helpers---lodash)
 - [Examples](#examples)
+- [Changelog](#changelog)
 
 ## Getting started
 
@@ -351,5 +352,9 @@ index.html
 - [React components](https://github.com/Meyhem/sneed/tree/master/examples/5-react-components)
 - [C# Service with Interface](https://github.com/Meyhem/sneed/tree/master/examples/6-c-sharp-service-with-interface)
 
-## Closing notes
-- Don't be Chuck
+## Changelog
+### 0.0.7 (28.08.2021)
+```
+Version bump of dependencies
+```
+

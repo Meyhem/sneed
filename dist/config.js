@@ -104,7 +104,7 @@ function loadConfig() {
         var result, cfg, validator, validationResult;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, cosmiconfig_1.cosmiconfig('sneed', { stopDir: process.cwd() }).search()];
+                case 0: return [4 /*yield*/, (0, cosmiconfig_1.cosmiconfig)('sneed', { stopDir: process.cwd() }).search()];
                 case 1:
                     result = _a.sent();
                     if (!result || result.isEmpty) {
@@ -112,7 +112,7 @@ function loadConfig() {
                     }
                     cfg = result === null || result === void 0 ? void 0 : result.config;
                     validator = new jsonschema_1.Validator();
-                    validationResult = validator.validate(cfg, configSchema, { propertyName: 'sneed' });
+                    validationResult = validator.validate(cfg, configSchema);
                     if (!validationResult.valid) {
                         throw new errors_1.SneedError("Invalid configuration: " + lodash_1.default.join(validationResult.errors));
                     }
